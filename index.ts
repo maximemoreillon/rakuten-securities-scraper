@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer"
+import puppeteer, { Browser } from "puppeteer"
 import dotenv from "dotenv"
 import { register } from "./registration"
 dotenv.config()
@@ -6,7 +6,19 @@ dotenv.config()
 const { RAKUTEN_SEC_USERNAME = "", RAKUTEN_SEC_PASSWORD = "" } = process.env
 
 async function main() {
-  const browser = await puppeteer.launch({ headless: "new" })
+  let browser: Browser
+
+  try {
+    browser = await puppeteer.launch({
+      headless: "new",
+      executablePath: "/usr/bin/google-chrome",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    })
+  } catch {
+    browser = await puppeteer.launch({ headless: "new" })
+  }
+
+  // const browser = await puppeteer.launch({ headless: "new" })
   const page = await browser.newPage()
 
   await page.goto("https://www.rakuten-sec.co.jp/")
