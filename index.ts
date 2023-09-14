@@ -1,10 +1,12 @@
 import puppeteer, { Browser } from "puppeteer"
 import dotenv from "dotenv"
 import { register } from "./registration"
+import { version } from "./package.json"
 dotenv.config()
 
 const { RAKUTEN_SEC_USERNAME = "", RAKUTEN_SEC_PASSWORD = "" } = process.env
 
+console.log(`Rakuten Securities scraper v${version}`)
 async function main() {
   let browser: Browser
 
@@ -36,6 +38,8 @@ async function main() {
   ).jsonValue()
 
   const total = Number(totalString.replace(/,/g, ""))
+
+  console.log(`Scraped total assets: ${total}`)
 
   await register(total)
 
