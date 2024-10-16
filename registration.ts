@@ -2,7 +2,7 @@ import axios from "axios"
 import dotenv from "dotenv"
 dotenv.config()
 
-const { FINANCES_API_URL, FINANCES_API_TOKEN, FINANCES_API_ACCOUNT_NAME } =
+const { FINANCES_API_URL, FINANCES_API_TOKEN, FINANCES_API_ACCOUNT_ID } =
   process.env
 
 const options = {
@@ -14,7 +14,7 @@ const options = {
 }
 
 export const register = (balance: number) => {
-  const url = `${FINANCES_API_URL}/accounts/${FINANCES_API_ACCOUNT_NAME}/balance`
+  const url = `${FINANCES_API_URL}/accounts/${FINANCES_API_ACCOUNT_ID}/balance`
 
   const body = {
     balance,
