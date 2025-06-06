@@ -1,6 +1,6 @@
 stages:
   - build
-  - deploy
+  # - deploy
 
 variables:
   APPLICATION_NAME: rakuten-securities-scraper
@@ -24,14 +24,13 @@ build:
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_TAGGED}
     - docker push ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE_TAGGED}
-
-deploy:
-  only:
-    - master
-  stage: deploy
-  tags:
-    - dind
-  before_script:
-    - kubectl config use-context moreillon_ci/moreillon_k8s_home/kubernetes-agent:home-talos
-  script:
-    - envsubst < kubernetes_manifest.yml | kubectl apply -n ${KUBERNETES_NAMESPACE} -f -
+# deploy:
+#   only:
+#     - master
+#   stage: deploy
+#   tags:
+#     - dind
+#   before_script:
+#     - kubectl config use-context moreillon_ci/moreillon_k8s_home/kubernetes-agent:home-talos
+#   script:
+#     - envsubst < kubernetes_manifest.yml | kubectl apply -n ${KUBERNETES_NAMESPACE} -f -
